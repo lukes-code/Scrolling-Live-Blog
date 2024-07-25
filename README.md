@@ -7,4 +7,19 @@
    2.1 Go to the directory that websocketServer.js lives in
    2.2 run this command in the terminal:
    node websocketServer.js
-3. Run locally with npm run dev
+3. Run locally with npm run dev once websocket server is running
+
+## Tech used
+
+Next.js (page router)
+TypeScript
+Tailwind
+Redux
+Websockets
+
+Notable packages:
+react-loading-skeleton
+react-toastify
+socket.io-clien
+
+Removed axios for fetch (no need for the package install here)
