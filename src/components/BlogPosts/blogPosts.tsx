@@ -92,33 +92,20 @@ const BlogPosts = () => {
 
   return (
     <>
-      <section className="flex flex-col mx-5 gap-y-3 justify-center items-center">
-        <BlogHeading>
-          ALL
-          <br />
-          POS-
-          <br />
-          TS.
-        </BlogHeading>
-        <p className="p-3 pb-10 max-w-[500px]">
-          From Counter Strike to League of Legends, Natus Vincere to FaZe Clan,
-          you'll find the most up to date news here.
-        </p>
-        {loading ? (
-          <Skeleton
-            count={5}
-            containerClassName="w-full flex flex-col max-w-[650px] gap-y-2"
-            className="h-[250px]"
-          />
-        ) : (
-          <>
-            {posts.slice(0, postsToShow).map((post, index) => (
-              <BlogPost post={post} key={index} />
-            ))}
-            <p className="py-10">No more posts :(</p>
-          </>
-        )}
-      </section>
+      {loading ? (
+        <Skeleton
+          count={5}
+          containerClassName="w-full flex flex-col max-w-[650px] gap-y-2"
+          className="h-[250px]"
+        />
+      ) : (
+        <>
+          {posts.slice(0, postsToShow).map((post, index) => (
+            <BlogPost post={post} key={index} />
+          ))}
+          <p className="py-10">No more posts :(</p>
+        </>
+      )}
       {showScrollToTop && <Button buttonType={ButtonType.ScrollToTop} />}
     </>
   );
