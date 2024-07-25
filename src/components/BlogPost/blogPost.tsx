@@ -7,6 +7,7 @@ import AuthorDetails from "../authorDetails";
 import { selectNewestPostId } from "@/selectors/blogSelector";
 import { classNames } from "@/helper";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const BlogPost = (props: { post: BlogPostType }) => {
   const { post } = props;
@@ -35,13 +36,16 @@ const BlogPost = (props: { post: BlogPostType }) => {
   };
 
   return (
-    <article
-      key={post?.id}
+    <motion.article
+      key={isNewestId ? `${post?.id}-newest` : post?.id} // Unique key to trigger animation
       className={classNames(
         isNewestId ? "border-[#c1e0f7]" : "border-gray-300",
         "flex flex-col border p-10 pb-5 w-full max-w-[650px] gap-y-2 transition-colors duration-300 relative"
       )}
       data-testid="blog-post"
+      initial={{ x: isNewestId ? 600 : 0 }}
+      animate={{ x: 0 }}
+      transition={{ type: "spring", stiffness: 50 }}
     >
       {isNewestId && (
         <span className="absolute top-[-15px] right-0 bg-[#c1e0f7] text-xs m-1 py-1 px-2">
@@ -62,7 +66,7 @@ const BlogPost = (props: { post: BlogPostType }) => {
           <Link href={`/blog/${post?.id}`}>Read More &rarr;</Link>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 };
 

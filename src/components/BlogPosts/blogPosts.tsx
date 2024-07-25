@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { fetchBlogPosts } from "@/api";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import WebsocketService from "@/websockets/websocketService";
@@ -8,7 +9,7 @@ import {
   setNewestId,
 } from "@/store/slices/blogSlice";
 import { BlogPost as BlogPostType, ButtonType } from "@/types";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   selectAllPosts,
   selectPostsToShow,
@@ -18,7 +19,6 @@ import BlogPost from "../BlogPost/blogPost";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
 import Button from "../button";
-import BlogHeading from "../blogHeading";
 
 const BlogPosts = () => {
   const dispatch = useAppDispatch();
@@ -99,12 +99,20 @@ const BlogPosts = () => {
           className="h-[250px]"
         />
       ) : (
-        <>
-          {posts.slice(0, postsToShow).map((post, index) => (
-            <BlogPost post={post} key={index} />
+        <AnimatePresence>
+          {posts.slice(0, postsToShow).map((post) => (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ type: "spring", stiffness: 50 }}
+            >
+              <BlogPost post={post} />
+            </motion.div>
           ))}
           <p className="py-10">No more posts :(</p>
-        </>
+        </AnimatePresence>
       )}
       {showScrollToTop && <Button buttonType={ButtonType.ScrollToTop} />}
     </>
