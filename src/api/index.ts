@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const fetchBlogPosts = async () => {
   try {
@@ -8,7 +9,6 @@ export const fetchBlogPosts = async () => {
     );
     return response.data;
   } catch (error) {
-    // Need to add toast notification here
-    throw new Error("Failed to fetch data");
+    toast.error("Failed to fetch posts");
   }
 };
