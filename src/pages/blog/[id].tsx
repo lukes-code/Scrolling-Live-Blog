@@ -33,7 +33,10 @@ const BlogPost = () => {
         <br />
         ST.
       </BlogHeading>
+
       <Button buttonType={ButtonType.Back} />
+      <Button buttonType={ButtonType.ScrollToTop} />
+
       {post ? (
         <article className="flex flex-col justify-center items-center gap-y-10">
           <h2 className="text-2xl font-bold">{post?.title}</h2>

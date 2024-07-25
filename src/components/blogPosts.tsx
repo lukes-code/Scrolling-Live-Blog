@@ -48,8 +48,8 @@ const BlogPosts = () => {
 
   // Load posts on initial render or when we increase the amount to show
   useEffect(() => {
-    loadPosts();
-  }, [postsToShow]);
+    if (totalPosts === 0) loadPosts();
+  }, [postsToShow, totalPosts]);
 
   // Add scroll event listener to track scroll position
   useEffect(() => {
