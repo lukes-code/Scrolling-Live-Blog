@@ -6,13 +6,15 @@ const AuthorDetails = (props: { author: Author; title: string }) => {
 
   return (
     <div className="flex items-center gap-x-4">
-      <Image
-        src={author.avatar}
-        alt={title}
-        width={50}
-        height={50}
-        className="rounded-full max-w-[50px] max-h-[50px]"
-      />
+      <div className="rounded-full bg-gray-200">
+        <Image
+          src={author.avatar}
+          alt={title}
+          width={50}
+          height={50}
+          className="rounded-full max-w-[50px] max-h-[50px]"
+        />
+      </div>
       <h3>{author.name}</h3>
     </div>
   );

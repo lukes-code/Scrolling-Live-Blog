@@ -12,3 +12,6 @@ export const selectTotalPosts = (state: RootState) => state.blog.posts.length;
 
 // Select number of posts to show
 export const selectPostsToShow = (state: RootState) => state.blog.postsToShow;
+
+// Id of newest post added
+export const selectNewestPostId = (state: RootState) => state.blog.newestId;

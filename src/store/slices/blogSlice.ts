@@ -5,12 +5,14 @@ type BlogState = {
   posts: BlogPost[];
   postsToShow: number;
   totalPosts: number;
+  newestId: number;
 };
 
 const initialState: BlogState = {
   posts: [],
-  postsToShow: 5, // Start with showing 5 posts
+  postsToShow: 20,
   totalPosts: 0,
+  newestId: 0,
 };
 
 const blogSlice = createSlice({
@@ -32,19 +34,14 @@ const blogSlice = createSlice({
       state.posts = state.posts.filter((post) => post.id !== action.payload);
       state.totalPosts -= 1;
     },
-    updatePost(state, action: PayloadAction<BlogPost>) {
-      const index = state.posts.findIndex(
-        (post) => post.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.posts[index] = action.payload;
-      }
-    },
     addPostToStart(state, action: PayloadAction<BlogPost>) {
       state.posts.unshift(action.payload);
     },
     increasePostsToShow(state) {
-      state.postsToShow += 20; // Show 5 more posts
+      state.postsToShow += 20;
+    },
+    setNewestId(state, action: PayloadAction<number>) {
+      state.newestId = action.payload;
     },
   },
 });
@@ -55,6 +52,6 @@ export const {
   increasePostsToShow,
   removePost,
   setPosts,
-  updatePost,
+  setNewestId,
 } = blogSlice.actions;
 export default blogSlice.reducer;

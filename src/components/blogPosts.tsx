@@ -5,8 +5,9 @@ import {
   setPosts,
   increasePostsToShow,
   addPostToStart,
+  setNewestId,
 } from "@/store/slices/blogSlice";
-import { BlogPost as BlogPostType } from "@/types";
+import { BlogPost as BlogPostType, ButtonType } from "@/types";
 import { useEffect, useState } from "react";
 import {
   selectAllPosts,
@@ -15,6 +16,9 @@ import {
 } from "@/selectors/blogSelector";
 import BlogPost from "./blogPost";
 import { toast } from "react-toastify";
+import Skeleton from "react-loading-skeleton";
+import Button from "./button";
+import BlogHeading from "./blogHeading";
 
 const BlogPosts = () => {
   const dispatch = useAppDispatch();
@@ -23,24 +27,52 @@ const BlogPosts = () => {
   const postsToShow = useAppSelector(selectPostsToShow);
   const totalPosts = useAppSelector(selectTotalPosts);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const loadPosts = async () => {
-    setLoading(true);
     try {
       const data = await fetchBlogPosts();
       dispatch(setPosts({ posts: data.posts, totalPosts: data.totalPosts }));
     } catch (error) {
       toast.error("Failed to fetch posts");
-    } finally {
-      setLoading(false);
     }
   };
+
+  // Hide loading skeleton when we have posts
+  useEffect(() => {
+    if (totalPosts > 0) {
+      setLoading(false);
+    }
+  }, [totalPosts]);
 
   // Load posts on initial render or when we increase the amount to show
   useEffect(() => {
     loadPosts();
   }, [postsToShow]);
+
+  // Add scroll event listener to track scroll position
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [loading, posts, totalPosts]);
+
+  // Connect to websocket and disptach new post to start of list when received
+  useEffect(() => {
+    WebsocketService.connect("ws://localhost:8080");
+
+    WebsocketService.onMessage((post: BlogPostType) => {
+      toast.success("New post added!");
+      dispatch(setNewestId(post.id));
+      dispatch(addPostToStart(post));
+    });
+
+    return () => {
+      WebsocketService.disconnect();
+    };
+  }, [dispatch]);
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
@@ -53,60 +85,41 @@ const BlogPosts = () => {
         dispatch(increasePostsToShow());
       }
     }
+
+    // Show or hide the scroll-to-top button based on scroll position
+    setShowScrollToTop(scrollTop > 100);
   };
-
-  // Add scroll event listener to track scroll position
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [loading, posts, totalPosts]);
-
-  // Dummy add new hardcoded post,
-  const handleAddPost = () => {
-    const gender = Math.random() < 0.5 ? "men" : "women";
-    const id = posts.length + 1;
-
-    const newPost: BlogPostType = {
-      id: id,
-      title: "New Post",
-      body: "This is a new post",
-      author: {
-        name: "John Doe",
-        avatar: `https://randomuser.me/api/portraits/${gender}/${id}.jpg`,
-      },
-      userId: 1,
-    };
-    dispatch(addPostToStart(newPost));
-  };
-
-  // Connect to websocket and disptach new post to start of list when received
-  useEffect(() => {
-    WebsocketService.connect("ws://localhost:8080");
-
-    WebsocketService.onMessage((post: BlogPostType) => {
-      toast.success("New post added!");
-      dispatch(addPostToStart(post));
-    });
-
-    return () => {
-      WebsocketService.disconnect();
-    };
-  }, [dispatch]);
 
   return (
     <>
-      <h1>Blog Posts</h1>
-      <button onClick={handleAddPost}>Add Post</button>
       <section className="flex flex-col mx-5 gap-y-3 justify-center items-center">
-        {/* Need to make this a blog post component */}
-        {posts.slice(0, postsToShow).map((post, index) => (
-          <BlogPost post={post} key={index} />
-        ))}
-        {loading && <p>Loading...</p>}
-        <p className="py-10">No more posts :(</p>
+        <BlogHeading>
+          ALL
+          <br />
+          POS-
+          <br />
+          TS.
+        </BlogHeading>
+        <p className="p-3 pb-10 max-w-[500px]">
+          From Counter Strike to League of Legends, Natus Vincere to FaZe Clan,
+          you'll find the most up to date news here.
+        </p>
+        {loading ? (
+          <Skeleton
+            count={5}
+            containerClassName="w-full flex flex-col max-w-[650px] gap-y-2"
+            className="h-[250px]"
+          />
+        ) : (
+          <>
+            {posts.slice(0, postsToShow).map((post, index) => (
+              <BlogPost post={post} key={index} />
+            ))}
+            <p className="py-10">No more posts :(</p>
+          </>
+        )}
       </section>
+      {showScrollToTop && <Button buttonType={ButtonType.ScrollToTop} />}
     </>
   );
 };

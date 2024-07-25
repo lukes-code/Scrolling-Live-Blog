@@ -1,31 +1,52 @@
 import { BlogPost as BlogPostType } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
 import Button from "./button";
-import { useAppDispatch } from "@/store/hooks";
-import { removePost, updatePost } from "@/store/slices/blogSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { removePost, setNewestId } from "@/store/slices/blogSlice";
 import AuthorDetails from "./authorDetails";
+import { selectNewestPostId } from "@/selectors/blogSelector";
+import { classNames } from "@/helper";
+import { useEffect, useState } from "react";
 
 const BlogPost = (props: { post: BlogPostType }) => {
   const { post } = props;
 
   const dispatch = useAppDispatch();
+  const newestId = useAppSelector(selectNewestPostId);
+
+  const [isNewestId, setIsNewestId] = useState(false);
+
+  // Handle styling when post is the newest post
+  useEffect(() => {
+    if (newestId === post?.id) {
+      setIsNewestId(true);
+      const timer = setTimeout(() => {
+        setIsNewestId(false);
+        dispatch(setNewestId(0));
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [newestId, post?.id, dispatch]);
 
   // Removes post from state
   const handleRemovePost = (id: number) => {
     dispatch(removePost(id));
   };
 
-  // Update post in state to new updated dummy title, could use this to track likes/favourites
-  const handleUpdatePost = (post: BlogPostType) => {
-    dispatch(updatePost(post));
-  };
-
   return (
-    <div
+    <article
       key={post?.id}
-      className="flex flex-col border p-10 pb-5 w-full max-w-[650px] gap-y-2"
+      className={classNames(
+        isNewestId ? "border-[#c1e0f7]" : "border-gray-300",
+        "flex flex-col border p-10 pb-5 w-full max-w-[650px] gap-y-2 transition-colors duration-300 relative"
+      )}
     >
+      {isNewestId && (
+        <span className="absolute top-[-15px] right-0 bg-[#c1e0f7] text-xs m-1 py-1 px-2">
+          New &#128640;
+        </span>
+      )}
       <AuthorDetails author={post?.author} title={post?.title} />
       <div className="flex flex-col gap-y-2 mt-2">
         <h2 className="underline text-xl">
@@ -35,21 +56,12 @@ const BlogPost = (props: { post: BlogPostType }) => {
         <p className="line-clamp-2 text-gray-600">{post?.body}</p>
         <div className="flex pt-5 items-center justify-between">
           <div className="flex gap-x-2">
-            <Button handleClick={() => handleRemovePost(post?.id)}>
-              Remove
-            </Button>
-            <Button
-              handleClick={() =>
-                handleUpdatePost({ ...post, title: "Updated Title" })
-              }
-            >
-              Update
-            </Button>
+            <Button handleClick={() => handleRemovePost(post?.id)}>Hide</Button>
           </div>
           <Link href={`/blog/${post?.id}`}>Read More &rarr;</Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

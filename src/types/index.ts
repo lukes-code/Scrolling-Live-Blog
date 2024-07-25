@@ -17,7 +17,8 @@ export type BlogState = {
   posts: BlogPost[];
 };
 
-export type ButtonProps = {
-  children: React.ReactNode;
-  handleClick: () => void;
-};
+export enum ButtonType {
+  Primary = "primary",
+  ScrollToTop = "scrollToTop",
+  Back = "back",
+}

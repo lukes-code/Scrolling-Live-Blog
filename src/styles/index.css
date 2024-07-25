@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import Poppins font */
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Poppins:ital,wght@400;700;&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.toast-position {
+  top: 125px;
+}
