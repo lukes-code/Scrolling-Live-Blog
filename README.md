@@ -16,6 +16,7 @@ TypeScript
 Tailwind
 Redux
 Websockets
+Jest / React testing library
 
 Notable packages:
 react-loading-skeleton
@@ -23,3 +24,8 @@ react-toastify
 socket.io-clien
 
 Removed axios for fetch (no need for the package install here)
+
+## How to test
+
+Run the command:
+npm test
