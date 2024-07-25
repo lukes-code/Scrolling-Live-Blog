@@ -10,10 +10,11 @@ Notes: Tests are light but only demonstratable. If you go to the blog specific p
 
 1. Install with npm i
 2. Start Websocket server locally
-   2.1 Go to the directory that websocketServer.js lives in
-   2.2 run this command in the terminal:
+
+- 2.1 Go to the directory that websocketServer.js lives in
+- 2.2 run this command in the terminal:
    node websocketServer.js
-3. Run locally with npm run dev once websocket server is running
+4. Run locally with npm run dev once websocket server is running
 
 ## Tech used
 
@@ -28,6 +29,7 @@ Notable packages:
 react-loading-skeleton
 react-toastify
 socket.io-clien
+framer-motion
 
 Removed axios for fetch (no need for the package install here)
 
@@ -38,4 +40,6 @@ npm test
 
 ## Video of app
 
-[screen-capture (2).webm](https://github.com/user-attachments/assets/8fef57f5-e673-4acd-a325-b8a40d77cf3d)
+[screen-capture (4).webm](https://github.com/user-attachments/assets/09f62226-cfea-44c4-b6bb-e600741f2f67)
+
+
