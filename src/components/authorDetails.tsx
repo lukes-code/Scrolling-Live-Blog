@@ -13,6 +13,7 @@ const AuthorDetails = (props: { author: Author; title: string }) => {
           width={50}
           height={50}
           className="rounded-full max-w-[50px] max-h-[50px]"
+          data-testid="author-avatar"
         />
       </div>
       <h3>{author.name}</h3>

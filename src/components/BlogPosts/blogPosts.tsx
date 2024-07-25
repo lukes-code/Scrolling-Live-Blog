@@ -14,11 +14,11 @@ import {
   selectPostsToShow,
   selectTotalPosts,
 } from "@/selectors/blogSelector";
-import BlogPost from "./blogPost";
+import BlogPost from "../BlogPost/blogPost";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
-import Button from "./button";
-import BlogHeading from "./blogHeading";
+import Button from "../button";
+import BlogHeading from "../blogHeading";
 
 const BlogPosts = () => {
   const dispatch = useAppDispatch();

@@ -1,9 +1,9 @@
 import { BlogPost as BlogPostType } from "@/types";
 import Link from "next/link";
-import Button from "./button";
+import Button from "../button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { removePost, setNewestId } from "@/store/slices/blogSlice";
-import AuthorDetails from "./authorDetails";
+import AuthorDetails from "../authorDetails";
 import { selectNewestPostId } from "@/selectors/blogSelector";
 import { classNames } from "@/helper";
 import { useEffect, useState } from "react";
@@ -41,6 +41,7 @@ const BlogPost = (props: { post: BlogPostType }) => {
         isNewestId ? "border-[#c1e0f7]" : "border-gray-300",
         "flex flex-col border p-10 pb-5 w-full max-w-[650px] gap-y-2 transition-colors duration-300 relative"
       )}
+      data-testid="blog-post"
     >
       {isNewestId && (
         <span className="absolute top-[-15px] right-0 bg-[#c1e0f7] text-xs m-1 py-1 px-2">

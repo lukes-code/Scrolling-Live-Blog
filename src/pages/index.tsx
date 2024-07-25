@@ -1,9 +1,5 @@
-import BlogPosts from "@/components/blogPosts";
+import BlogPosts from "@/components/BlogPosts/blogPosts";
 
 export default function Home() {
-  return (
-    <div>
-      <BlogPosts />
-    </div>
-  );
+  return <BlogPosts />;
 }
