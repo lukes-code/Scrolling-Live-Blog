@@ -33,7 +33,7 @@ const BlogPosts = () => {
   const loadPosts = async () => {
     try {
       const data = await fetchBlogPosts();
-      dispatch(setPosts({ posts: data.posts, totalPosts: data.totalPosts }));
+      dispatch(setPosts({ posts: data, totalPosts: data.length }));
     } catch (error) {
       toast.error("Failed to fetch posts");
     }

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 export const fetchBlogPosts = async () => {
   try {
     // Custom API endpoint that returns dummy data
-    const response = await fetch("https://dummyjson.com/c/4c10-1f49-4977-870c");
+    const response = await fetch("http://localhost:5000/blog_posts");
 
     if (!response.ok) {
       toast.error(`Failed to fetch posts ${response.status}`);

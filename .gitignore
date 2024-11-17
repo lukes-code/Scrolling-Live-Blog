@@ -1,15 +1,15 @@
 # dependencies
-frontend/node_modules
+node_modules
 
 # Next.js build output
-frontend/.next
-frontend/out
+.next
+out
 
 # testing
-frontend/coverage
+coverage
 
 # static files
-frontend/public/static
+public/static
 
 # dotenv environment variables file
 .env
