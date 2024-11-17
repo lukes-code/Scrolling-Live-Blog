@@ -1,5 +1,5 @@
-import BlogPosts from "@/components/BlogPosts/blogPosts";
-import BlogHeading from "@/components/blogHeading";
+import BlogPosts from "../components/BlogPosts/blogPosts";
+import BlogHeading from "../components/blogHeading";
 
 export default function Home() {
   return (

@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import { fetchBlogPosts } from "@/api";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import WebsocketService from "@/websockets/websocketService";
+import { fetchBlogPosts } from "../../api";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import WebsocketService from "../../websockets/websocketService";
 import {
   setPosts,
   increasePostsToShow,
   addPostToStart,
   setNewestId,
-} from "@/store/slices/blogSlice";
-import { BlogPost as BlogPostType, ButtonType } from "@/types";
+} from "../../store/slices/blogSlice";
+import { BlogPost as BlogPostType, ButtonType } from "../../types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   selectAllPosts,
   selectPostsToShow,
   selectTotalPosts,
-} from "@/selectors/blogSelector";
+} from "../../selectors/blogSelector";
 import BlogPost from "../BlogPost/blogPost";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";

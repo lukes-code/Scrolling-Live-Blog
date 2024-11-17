@@ -1,4 +1,4 @@
-import { Author } from "@/types";
+import { Author } from "../types";
 import Image from "next/image";
 
 const AuthorDetails = (props: { author: Author; title: string }) => {

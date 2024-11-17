@@ -1,13 +1,13 @@
-import { BlogPost as BlogPostType } from "@/types";
-import Link from "next/link";
-import Button from "../button";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { removePost, setNewestId } from "@/store/slices/blogSlice";
-import AuthorDetails from "../authorDetails";
-import { selectNewestPostId } from "@/selectors/blogSelector";
-import { classNames } from "@/helper";
-import { useEffect, useState } from "react";
+import { BlogPost as BlogPostType } from "../../types";
+import { classNames } from "../../helper";
 import { motion } from "framer-motion";
+import { removePost, setNewestId } from "../../store/slices/blogSlice";
+import { selectNewestPostId } from "../../selectors/blogSelector";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useEffect, useState } from "react";
+import AuthorDetails from "../authorDetails";
+import Button from "../button";
+import Link from "next/link";
 
 const BlogPost = (props: { post: BlogPostType }) => {
   const { post } = props;

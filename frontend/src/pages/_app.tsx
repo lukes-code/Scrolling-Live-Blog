@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
+import { store } from "../store/store";
 import { ToastContainer } from "react-toastify";
-import Nav from "@/components/nav";
+import Nav from "../components/nav";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";

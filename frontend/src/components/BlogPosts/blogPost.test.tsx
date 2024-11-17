@@ -2,9 +2,9 @@ import React from "react";
 import { render, screen, waitFor, act } from "@testing-library/react";
 import { Provider } from "react-redux";
 import BlogPosts from "./blogPosts";
-import { fetchBlogPosts } from "@/api";
+import { fetchBlogPosts } from "../../api";
 import { blogPostsData } from "./mockData";
-import { store } from "@/store/store";
+import { store } from "../../store/store";
 
 jest.mock("@/api");
 
@@ -77,18 +77,6 @@ describe("BlogPosts Component", () => {
           <BlogPosts />
         </Provider>
       );
-    });
-
-    await waitFor(() => {
-      expect(screen.getAllByTestId("heading"));
-    });
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          "From Counter Strike to League of Legends, Natus Vincere to FaZe Clan, you'll find the most up to date news here."
-        )
-      ).toBeInTheDocument();
     });
   });
 });

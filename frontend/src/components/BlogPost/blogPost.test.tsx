@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, waitFor, act } from "@testing-library/react";
 import { Provider } from "react-redux";
 import BlogPost from "./blogPost";
-import { store } from "@/store/store";
+import { store } from "../../store/store";
 
 const blogPostData = {
   id: 1,

@@ -1,4 +1,4 @@
-import { RootState } from "@/store/store";
+import { RootState } from "../store/store";
 
 // Select all posts
 export const selectAllPosts = (state: RootState) => state.blog.posts;

@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import { useAppSelector } from "@/store/hooks";
-import { selectPostById } from "@/selectors/blogSelector";
+import { useAppSelector } from "../../store/hooks";
+import { selectPostById } from "../../selectors/blogSelector";
 import Image from "next/image";
-import AuthorDetails from "@/components/authorDetails";
-import Button from "@/components/button";
-import { ButtonType } from "@/types";
-import BlogHeading from "@/components/blogHeading";
+import AuthorDetails from "../../components/authorDetails";
+import Button from "../../components/button";
+import { ButtonType } from "../../types";
+import BlogHeading from "../../components/blogHeading";
 import Skeleton from "react-loading-skeleton";
 
 const BlogPost = () => {
