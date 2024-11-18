@@ -1,61 +1,68 @@
 const express = require("express");
-const BlogPost = require("../models/BlogPost");
+const { ObjectId } = require("mongodb");
 const router = express.Router();
 
-// GET: All blog posts
-router.get("/", async (req, res) => {
-  try {
-    const posts = await BlogPost.find();
-    res.json(posts);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to fetch posts" });
-  }
-});
+// Export a function that receives the database instance
+module.exports = (database) => {
+  const collection = database.collection("blogPosts");
 
-// GET: Single blog post by ID
-router.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const post = await BlogPost.findById(id);
-
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+  // GET: All blog posts
+  router.get("/", async (req, res) => {
+    try {
+      const posts = await collection.find({}).toArray();
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      res.status(500).json({ message: "Failed to fetch posts" });
     }
+  });
 
-    res.json(post);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to fetch post" });
-  }
-});
+  // GET: Single blog post by ID
+  router.get("/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const post = await collection.findOne({ _id: new ObjectId(id) });
 
-// POST: Create a new blog post
-router.post("/", async (req, res) => {
-  try {
-    // Create a new blog post instance
-    const newPost = new BlogPost(req.body);
-    // Save to database
-    const savedPost = await newPost.save();
-    // Return the saved post
-    res.status(201).json(savedPost);
-  } catch (error) {
-    res.status(400).json({ message: "Failed to create post" });
-  }
-});
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
 
-// DELETE: Delete a blog post by ID
-router.delete("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedPost = await BlogPost.findByIdAndDelete(id);
-
-    if (!deletedPost) {
-      return res.status(404).json({ message: "Post not found" });
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching post:", error);
+      res.status(500).json({ message: "Failed to fetch post" });
     }
+  });
 
-    res.json({ message: "Post deleted successfully", post: deletedPost });
-  } catch (error) {
-    res.status(500).json({ message: "Failed to delete post" });
-  }
-});
+  // POST: Create a new blog post
+  router.post("/", async (req, res) => {
+    try {
+      const newPost = req.body;
+      const result = await collection.insertOne(newPost);
 
-module.exports = router;
+      res.status(201).json(result.ops[0]);
+    } catch (error) {
+      console.error("Error creating post:", error);
+      res.status(400).json({ message: "Failed to create post" });
+    }
+  });
+
+  // DELETE: Delete a blog post by ID
+  router.delete("/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+      if (result.deletedCount === 0) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+
+      res.json({ message: "Post deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      res.status(500).json({ message: "Failed to delete post" });
+    }
+  });
+
+  return router;
+};

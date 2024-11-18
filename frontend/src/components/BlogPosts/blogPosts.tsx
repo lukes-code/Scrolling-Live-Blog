@@ -29,13 +29,18 @@ const BlogPosts = () => {
 
   const [loading, setLoading] = useState(true);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [error, setError] = useState(false);
 
   const loadPosts = async () => {
     try {
       const data = await fetchBlogPosts();
       dispatch(setPosts({ posts: data, totalPosts: data.length }));
+      setError(false);
+      setLoading(false);
     } catch (error) {
+      setError(true);
       toast.error("Failed to fetch posts");
+      setLoading(false);
     }
   };
 
@@ -92,7 +97,7 @@ const BlogPosts = () => {
 
   return (
     <>
-      {loading ? (
+      {loading && !error ? (
         <Skeleton
           count={5}
           containerClassName="w-full flex flex-col max-w-[650px] gap-y-2"
