@@ -29,9 +29,18 @@ const Button = (props: ButtonProps) => {
       return (
         <button
           onClick={scrollToTop}
-          className="w-[50px] h-[50px] fixed bottom-4 right-10 p-2 bg-gray-900 text-white rounded-full shadow-md hover:bg-gray-700 transition-colors duration-300"
+          className="w-[50px] h-[50px] fixed bottom-10 left-10 p-2 bg-gray-900 text-white rounded-full shadow-md hover:bg-gray-700 transition-colors duration-300"
         >
           &uarr;
+        </button>
+      );
+    case ButtonType.AddNew:
+      return (
+        <button
+          onClick={!!handleClick ? handleClick : () => {}}
+          className="w-[50px] h-[50px] fixed bottom-10 right-10 p-2 bg-gray-900 text-white rounded-full shadow-md hover:bg-gray-700 transition-colors duration-300"
+        >
+          &#x002B;
         </button>
       );
     case ButtonType.Back:

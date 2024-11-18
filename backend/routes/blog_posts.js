@@ -40,7 +40,7 @@ module.exports = (database) => {
       const newPost = req.body;
       const result = await collection.insertOne(newPost);
 
-      res.status(201).json(result.ops[0]);
+      res.status(201).json(result);
     } catch (error) {
       console.error("Error creating post:", error);
       res.status(400).json({ message: "Failed to create post" });

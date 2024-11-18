@@ -70,7 +70,7 @@ const BlogPosts = () => {
 
     WebsocketService.onMessage((post: BlogPostType) => {
       toast.success("New post added!");
-      dispatch(setNewestId(post.id));
+      dispatch(setNewestId(post._id));
       dispatch(addPostToStart(post));
     });
 
@@ -105,9 +105,9 @@ const BlogPosts = () => {
         />
       ) : (
         <AnimatePresence>
-          {posts.slice(0, postsToShow).map((post) => (
+          {posts.slice(0, postsToShow).map((post, index) => (
             <motion.div
-              key={post.id}
+              key={index}
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}

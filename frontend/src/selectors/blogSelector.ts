@@ -5,7 +5,7 @@ export const selectAllPosts = (state: RootState) => state.blog.posts || [];
 
 // Select a post by id with fallback
 export const selectPostById = (state: RootState, postId: number) =>
-  state.blog.posts?.find((post) => post?.id === postId) || null;
+  state.blog.posts?.find((post) => post?._id === postId) || null;
 
 // Select total number of posts with fallback
 export const selectTotalPosts = (state: RootState) =>

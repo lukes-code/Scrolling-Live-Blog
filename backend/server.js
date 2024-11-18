@@ -14,8 +14,6 @@ const client = new MongoClient(uri);
 async function startServer() {
   try {
     await client.connect();
-    console.log("Connected to MongoDB");
-
     const database = client.db("blog_posts");
 
     // Middleware

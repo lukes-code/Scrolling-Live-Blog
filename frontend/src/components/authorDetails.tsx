@@ -4,6 +4,8 @@ import Image from "next/image";
 const AuthorDetails = (props: { author: Author; title: string }) => {
   const { author, title } = props;
 
+  if (!author) return null;
+
   return (
     <div className="flex items-center gap-x-4">
       <div className="rounded-full bg-gray-200">
