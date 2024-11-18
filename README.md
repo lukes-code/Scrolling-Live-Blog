@@ -10,11 +10,13 @@ Notes: Tests are light but only demonstratable. If you go to the blog specific p
 
 1. Install with npm i
 2. Start Websocket server locally
-
-- 2.1 Go to the directory that websocketServer.js lives in
+- 2.1 Go to the directory that websocketServer.js lives in (frontend/src/websockets/)
 - 2.2 run this command in the terminal:
    node websocketServer.js
-4. Run locally with npm run dev once websocket server is running
+4. Run backend by going to the dir (backend)
+- 4.1 run this command in the terminal:
+   npm run startDev
+5. Run locally with npm run dev once websocket server is running
 
 ## Tech used
 
@@ -23,13 +25,17 @@ TypeScript
 Tailwind
 Redux
 Websockets
-Jest / React testing library
+Node
+Express
+Mongodb
+Jest / React testing library (small amount)
 
 Notable packages:
 react-loading-skeleton
 react-toastify
 socket.io-clien
 framer-motion
+radiux ui
 
 Removed axios for fetch (no need for the package install here)
 
