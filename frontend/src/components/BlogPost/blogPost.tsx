@@ -24,7 +24,7 @@ const BlogPost = (props: { post: BlogPostType }) => {
       setIsNewestId(true);
       const timer = setTimeout(() => {
         setIsNewestId(false);
-        dispatch(setNewestId(0));
+        dispatch(setNewestId(""));
       }, 5000);
 
       return () => clearTimeout(timer);
@@ -32,7 +32,7 @@ const BlogPost = (props: { post: BlogPostType }) => {
   }, [newestId, post?._id, dispatch]);
 
   // Removes post from state
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     dispatch(deletePostAsync(id));
   };
 

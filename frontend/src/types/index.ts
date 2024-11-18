@@ -1,7 +1,7 @@
 // Exported types live here, separate them out here if the app grows in size
 
 export type BlogPost = {
-  _id?: number;
+  _id?: string;
   author: Author;
   title: string;
   body: string;

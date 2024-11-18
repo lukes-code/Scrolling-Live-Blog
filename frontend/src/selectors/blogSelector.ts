@@ -4,7 +4,7 @@ import { RootState } from "../store/store";
 export const selectAllPosts = (state: RootState) => state.blog.posts || [];
 
 // Select a post by id with fallback
-export const selectPostById = (state: RootState, postId: number) =>
+export const selectPostById = (state: RootState, postId: string) =>
   state.blog.posts?.find((post) => post?._id === postId) || null;
 
 // Select total number of posts with fallback
