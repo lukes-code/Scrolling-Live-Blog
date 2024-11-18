@@ -18,11 +18,21 @@ const BlogPost = () => {
   const { id } = router.query;
 
   const [fetchedPost, setFetchedPost] = useState(null);
+  const [error, setError] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const idString = typeof id !== "string" ? "" : id;
 
   // Directly select the post by id
   let post = useAppSelector((state) => selectPostById(state, idString));
+
+  // Add scroll event listener to track scroll position
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [fetchedPost]);
 
   // Fetch the post if not found in the store
   useEffect(() => {
@@ -31,8 +41,10 @@ const BlogPost = () => {
         const actionResult = await dispatch(fetchPostAsync(idString));
         if (fetchPostAsync.fulfilled.match(actionResult)) {
           setFetchedPost(actionResult.payload);
+          setError(false);
         } else {
           toast.error("Unable to fetch post");
+          setError(true);
         }
       };
       fetchPost();
@@ -40,6 +52,13 @@ const BlogPost = () => {
       setFetchedPost(post);
     }
   }, [dispatch, idString, post]);
+
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+
+    // Show or hide the scroll-to-top button based on scroll position
+    setShowScrollToTop(scrollTop > 100);
+  };
 
   return (
     <div className="flex flex-col p-10 pt-0 w-full text-center gap-y-10 justify-center items-center">
@@ -52,7 +71,7 @@ const BlogPost = () => {
       </BlogHeading>
 
       <Button buttonType={ButtonType.Back} />
-      <Button buttonType={ButtonType.ScrollToTop} />
+      {showScrollToTop && <Button buttonType={ButtonType.ScrollToTop} />}
 
       {fetchedPost ? (
         <article className="flex flex-col justify-center items-center gap-y-10">
@@ -64,10 +83,16 @@ const BlogPost = () => {
           />
         </article>
       ) : (
-        <Skeleton
-          containerClassName="w-full flex flex-col max-w-[650px]"
-          className="h-[250px]"
-        />
+        <>
+          {error ? (
+            <p>Failed to fetch post :(</p>
+          ) : (
+            <Skeleton
+              containerClassName="w-full flex flex-col max-w-[650px]"
+              className="h-[250px]"
+            />
+          )}
+        </>
       )}
     </div>
   );

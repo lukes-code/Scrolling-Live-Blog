@@ -84,8 +84,8 @@ const BlogPosts = () => {
     const viewportHeight = window.innerHeight;
     const scrollHeight = document.documentElement.scrollHeight;
 
-    if (scrollTop + viewportHeight >= scrollHeight - 100) {
-      // 100px from bottom increate number of posts to show
+    if (scrollTop + viewportHeight >= scrollHeight - 200) {
+      // 200px from bottom increate number of posts to show
       if (!loading && postsToShow < totalPosts) {
         dispatch(increasePostsToShow());
       }
